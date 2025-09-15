@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { supabaseClient } from "@/lib/supabase";
 
-export async function GET(req: Request, { params }: any) {
-  const { id } = params; 
-  
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+
   const { data, error } = await supabaseClient
     .from("songs")
     .select("*")
