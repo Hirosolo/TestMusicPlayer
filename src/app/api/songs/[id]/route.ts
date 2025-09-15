@@ -1,15 +1,21 @@
-import { NextResponse } from 'next/server'
-import { supabaseClient } from '@/lib/supabase'
+import { NextResponse } from "next/server";
+import { supabaseClient } from "@/lib/supabase";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params; 
+  
   const { data, error } = await supabaseClient
-    .from('songs')
-    .select('*')
-    .eq('id', params.id)
-    .single()
+    .from("songs")
+    .select("*")
+    .eq("id", id)
+    .single();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 404 })
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return NextResponse.json(data)
+
+  return NextResponse.json(data);
 }
