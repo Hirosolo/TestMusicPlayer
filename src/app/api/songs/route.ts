@@ -15,10 +15,10 @@ export async function GET() {
 // POST new song
 export async function POST(request: Request) {
   const body = await request.json();
-  const { title, artist, album, duration, cover_url, file_path } = body;
+  const { title, artist, album, duration, cover_url, file_path, file_url } = body;
 
   const { data, error } = await supabaseClient.from("songs").insert([
-    { title, artist, album, duration, cover_url, file_path },
+    { title, artist, album, duration, cover_url, file_path, file_url },
   ]);
 
   if (error) {
